@@ -16,7 +16,7 @@
 		"@types/bun": "1.1.14",
 		"eslint": "9.6.0",
 		"vafast": "^0.1.12",
-		"tsup": "^8.1.0",
+		"tsup": "^8.5.1",
 		"typescript": "^5.5.3"
 	},
 	"main": "./dist/cjs/index.js",
