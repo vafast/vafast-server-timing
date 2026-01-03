@@ -1,14 +1,19 @@
 # @vafast/server-timing
-基于 [`tirne`](https://tirne.dev/) 的 Server-Timing 中间件，用于性能追踪与调试。
 
-## 安装
+Server-Timing middleware for [Vafast](https://github.com/vafastjs/vafast) framework, used for performance tracking and debugging.
+
+## Installation
+
 ```bash
-bun add @vafast/server-timing tirne
+bun add @vafast/server-timing
+# or
+npm install @vafast/server-timing
 ```
 
-## 使用
-```ts
-import { Server, json } from 'tirne'
+## Usage
+
+```typescript
+import { Server, createHandler } from 'vafast'
 import { serverTiming } from '@vafast/server-timing'
 
 const timing = serverTiming()
@@ -16,14 +21,45 @@ const timing = serverTiming()
 const routes = [
   {
     method: 'GET',
-    path: '/limited',
+    path: '/',
     middleware: [timing],
-    handler: () => json({ ok: true })
+    handler: createHandler(() => {
+      return { ok: true }
+    })
   }
 ]
 
 const server = new Server(routes)
-export default { fetch: (req: Request) => server.fetch(req) }
+
+export default {
+  fetch: (req: Request) => server.fetch(req)
+}
 ```
 
-更多 tirne 中间件示例参考官方文档：[Rate Limit Middleware](https://tirne.dev/docs/rate-Limit-Middleware)
+## Configuration
+
+### enabled
+
+@default `NODE_ENV !== 'production'`
+
+Whether to enable Server-Timing middleware
+
+### allow
+
+@default `true`
+
+Allow/deny writing response headers
+- `boolean` - Whether to allow
+- `function` - Dynamic judgment based on context
+
+### trace
+
+@default `{ handle: true, total: true }`
+
+Tracking options
+- `handle` - Track handler execution time
+- `total` - Track total request time
+
+## License
+
+MIT
