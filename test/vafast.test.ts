@@ -1,5 +1,6 @@
-import { Server, createRouteHandler } from 'vafast'
+import { Server, createHandler, json } from 'vafast'
 import { serverTiming } from '../src/index'
+import { describe, expect, it } from 'vitest'
 
 describe('Vafast Server Timing Plugin', () => {
 	it('should create server timing middleware', () => {
@@ -22,7 +23,7 @@ describe('Vafast Server Timing Plugin', () => {
 			{
 				method: 'GET',
 				path: '/',
-				handler: createRouteHandler(() => {
+				handler: createHandler(() => {
 					return 'Hello, Server Timing!'
 				})
 			}
@@ -56,7 +57,7 @@ describe('Vafast Server Timing Plugin', () => {
 			{
 				method: 'GET',
 				path: '/',
-				handler: createRouteHandler(() => {
+				handler: createHandler(() => {
 					return 'Hello, No Timing!'
 				})
 			}
@@ -89,14 +90,14 @@ describe('Vafast Server Timing Plugin', () => {
 			{
 				method: 'GET',
 				path: '/allow',
-				handler: createRouteHandler(() => {
+				handler: createHandler(() => {
 					return 'Allowed with timing'
 				})
 			},
 			{
 				method: 'GET',
 				path: '/deny',
-				handler: createRouteHandler(() => {
+				handler: createHandler(() => {
 					return 'Denied timing'
 				})
 			}
@@ -133,7 +134,7 @@ describe('Vafast Server Timing Plugin', () => {
 			{
 				method: 'GET',
 				path: '/',
-				handler: createRouteHandler(() => {
+				handler: createHandler(() => {
 					return 'No timing allowed'
 				})
 			}
@@ -162,7 +163,7 @@ describe('Vafast Server Timing Plugin', () => {
 			{
 				method: 'GET',
 				path: '/',
-				handler: createRouteHandler(() => {
+				handler: createHandler(() => {
 					return 'Custom trace config'
 				})
 			}
@@ -193,7 +194,7 @@ describe('Vafast Server Timing Plugin', () => {
 			{
 				method: 'GET',
 				path: '/',
-				handler: createRouteHandler(async () => {
+				handler: createHandler(async () => {
 					// 模拟异步操作
 					await new Promise((resolve) => setTimeout(resolve, 10))
 					return 'Async operation completed'
@@ -242,15 +243,15 @@ describe('Vafast Server Timing Plugin', () => {
 			{
 				method: 'GET',
 				path: '/',
-				handler: createRouteHandler(() => {
-					return { method: 'GET' }
+				handler: createHandler(() => {
+					return json({ method: 'GET' })
 				})
 			},
 			{
 				method: 'POST',
 				path: '/',
-				handler: createRouteHandler(() => {
-					return { method: 'POST' }
+				handler: createHandler(() => {
+					return json({ method: 'POST' })
 				})
 			}
 		])
