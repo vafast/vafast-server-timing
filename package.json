@@ -43,13 +43,13 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/vafastjs/vafast-server-timing"
+		"url": "https://github.com/vafast/vafast-server-timing"
 	},
 	"author": {
 		"name": "saltyAom",
 		"url": "https://github.com/SaltyAom",
 		"email": "saltyaom@gmail.com"
 	},
-	"homepage": "https://github.com/vafastjs/vafast-server-timing",
-	"bugs": "https://github.com/vafastjs/vafast-server-timing/issues"
+	"homepage": "https://github.com/vafast/vafast-server-timing",
+	"bugs": "https://github.com/vafast/vafast-server-timing/issues"
 }
