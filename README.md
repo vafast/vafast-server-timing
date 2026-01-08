@@ -5,7 +5,7 @@ Server-Timing middleware for [Vafast](https://github.com/vafastjs/vafast) framew
 ## Installation
 
 ```bash
-bun add @vafast/server-timing
+npm install @vafast/server-timing
 # or
 npm install @vafast/server-timing
 ```
