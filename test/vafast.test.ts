@@ -1,4 +1,4 @@
-import { Server, createHandler, json } from 'vafast'
+import { Server, defineRoute, defineRoutes, json } from 'vafast'
 import { serverTiming } from '../src/index'
 import { describe, expect, it } from 'vitest'
 
@@ -19,15 +19,15 @@ describe('Vafast Server Timing Plugin', () => {
 			trace: { handle: true, total: true }
 		})
 
-		const app = new Server([
-			{
-				method: 'GET',
-				path: '/',
-				handler: createHandler(() => {
-					return 'Hello, Server Timing!'
+		const app = new Server(
+			defineRoutes([
+				defineRoute({
+					method: 'GET',
+					path: '/',
+					handler: () => 'Hello, Server Timing!'
 				})
-			}
-		])
+			])
+		)
 
 		// 应用中间件
 		const wrappedFetch = (req: Request) => {
@@ -53,15 +53,15 @@ describe('Vafast Server Timing Plugin', () => {
 			trace: { handle: true, total: true }
 		})
 
-		const app = new Server([
-			{
-				method: 'GET',
-				path: '/',
-				handler: createHandler(() => {
-					return 'Hello, No Timing!'
+		const app = new Server(
+			defineRoutes([
+				defineRoute({
+					method: 'GET',
+					path: '/',
+					handler: () => 'Hello, No Timing!'
 				})
-			}
-		])
+			])
+		)
 
 		// 应用中间件
 		const wrappedFetch = (req: Request) => {
@@ -86,22 +86,20 @@ describe('Vafast Server Timing Plugin', () => {
 			trace: { handle: true, total: true }
 		})
 
-		const app = new Server([
-			{
-				method: 'GET',
-				path: '/allow',
-				handler: createHandler(() => {
-					return 'Allowed with timing'
+		const app = new Server(
+			defineRoutes([
+				defineRoute({
+					method: 'GET',
+					path: '/allow',
+					handler: () => 'Allowed with timing'
+				}),
+				defineRoute({
+					method: 'GET',
+					path: '/deny',
+					handler: () => 'Denied timing'
 				})
-			},
-			{
-				method: 'GET',
-				path: '/deny',
-				handler: createHandler(() => {
-					return 'Denied timing'
-				})
-			}
-		])
+			])
+		)
 
 		// 应用中间件
 		const wrappedFetch = (req: Request) => {
@@ -130,15 +128,15 @@ describe('Vafast Server Timing Plugin', () => {
 			trace: { handle: true, total: true }
 		})
 
-		const app = new Server([
-			{
-				method: 'GET',
-				path: '/',
-				handler: createHandler(() => {
-					return 'No timing allowed'
+		const app = new Server(
+			defineRoutes([
+				defineRoute({
+					method: 'GET',
+					path: '/',
+					handler: () => 'No timing allowed'
 				})
-			}
-		])
+			])
+		)
 
 		// 应用中间件
 		const wrappedFetch = (req: Request) => {
@@ -159,15 +157,15 @@ describe('Vafast Server Timing Plugin', () => {
 			trace: { handle: false, total: true } // 只追踪总数
 		})
 
-		const app = new Server([
-			{
-				method: 'GET',
-				path: '/',
-				handler: createHandler(() => {
-					return 'Custom trace config'
+		const app = new Server(
+			defineRoutes([
+				defineRoute({
+					method: 'GET',
+					path: '/',
+					handler: () => 'Custom trace config'
 				})
-			}
-		])
+			])
+		)
 
 		// 应用中间件
 		const wrappedFetch = (req: Request) => {
@@ -190,17 +188,19 @@ describe('Vafast Server Timing Plugin', () => {
 			trace: { handle: true, total: true }
 		})
 
-		const app = new Server([
-			{
-				method: 'GET',
-				path: '/',
-				handler: createHandler(async () => {
-					// 模拟异步操作
-					await new Promise((resolve) => setTimeout(resolve, 10))
-					return 'Async operation completed'
+		const app = new Server(
+			defineRoutes([
+				defineRoute({
+					method: 'GET',
+					path: '/',
+					handler: async () => {
+						// 模拟异步操作
+						await new Promise((resolve) => setTimeout(resolve, 10))
+						return 'Async operation completed'
+					}
 				})
-			}
-		])
+			])
+		)
 
 		// 应用中间件
 		const wrappedFetch = (req: Request) => {
@@ -239,22 +239,20 @@ describe('Vafast Server Timing Plugin', () => {
 			trace: { handle: true, total: true }
 		})
 
-		const app = new Server([
-			{
-				method: 'GET',
-				path: '/',
-				handler: createHandler(() => {
-					return json({ method: 'GET' })
+		const app = new Server(
+			defineRoutes([
+				defineRoute({
+					method: 'GET',
+					path: '/',
+					handler: () => json({ method: 'GET' })
+				}),
+				defineRoute({
+					method: 'POST',
+					path: '/',
+					handler: () => json({ method: 'POST' })
 				})
-			},
-			{
-				method: 'POST',
-				path: '/',
-				handler: createHandler(() => {
-					return json({ method: 'POST' })
-				})
-			}
-		])
+			])
+		)
 
 		// 应用中间件
 		const wrappedFetch = (req: Request) => {

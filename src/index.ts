@@ -1,4 +1,4 @@
-import type { Middleware } from 'vafast'
+import { defineMiddleware } from 'vafast'
 
 type MaybePromise<T> = T | Promise<T>
 
@@ -32,8 +32,8 @@ export const serverTiming = ({
 	enabled = process.env.NODE_ENV !== 'production',
 	allow,
 	trace: { handle: traceHandle = true, total: traceTotal = true } = {}
-}: ServerTimingOptions = {}): Middleware => {
-	return async (req: Request, next: () => Promise<Response>) => {
+}: ServerTimingOptions = {}) => {
+	return defineMiddleware(async (req, next) => {
 		if (!enabled) return next()
 
 		const start = now()
@@ -67,7 +67,7 @@ export const serverTiming = ({
 		}
 
 		return response
-	}
+	})
 }
 
 export default serverTiming
