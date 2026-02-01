@@ -1,6 +1,6 @@
 {
 	"name": "@vafast/server-timing",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"description": "Plugin for Vafast for server timing",
 	"type": "module",
 	"license": "MIT",
