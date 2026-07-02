@@ -1,54 +1,56 @@
 {
-	"name": "@vafast/server-timing",
-	"version": "0.0.7",
-	"description": "Plugin for Vafast for server timing",
-	"type": "module",
-	"license": "MIT",
-	"scripts": {
-		"build": "tsdown",
-		"dev": "npx tsx watch example/index.ts",
-		"test": "npx vitest run",
-		"release": "npm run build && npm run test && npx bumpp && npm publish --access=public"
-	},
-	"peerDependencies": {
-		"vafast": "<2.0.0"
-	},
-	"files": [
-		"dist",
-		"README.md",
-		"LICENSE"
-	],
-	"devDependencies": {
-		"@types/node": "^24.0.0",
-		"rimraf": "^6.0.1",
-		"tsdown": "^0.19.0-beta.4",
-		"typescript": "^5.4.5",
-		"vitest": "^4.0.16"
-	},
-	"main": "./dist/index.js",
-	"module": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"exports": {
-		".": {
-			"types": "./dist/index.d.ts",
-			"import": "./dist/index.js",
-			"default": "./dist/index.js"
-		}
-	},
-	"keywords": [
-		"vafast",
-		"server-timing",
-		"performance"
-	],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/vafast/vafast-server-timing"
-	},
-	"author": {
-		"name": "saltyAom",
-		"url": "https://github.com/SaltyAom",
-		"email": "saltyaom@gmail.com"
-	},
-	"homepage": "https://github.com/vafast/vafast-server-timing",
-	"bugs": "https://github.com/vafast/vafast-server-timing/issues"
+  "name": "@vafast/server-timing",
+  "version": "0.0.8",
+  "description": "Plugin for Vafast for server timing",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsdown",
+    "dev": "npx tsx watch example/index.ts",
+    "test": "npx vitest run",
+    "release": "npm run build && npm run test && npx bumpp && npm publish --access=public",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "vafast": "<2.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "rimraf": "^6.0.1",
+    "tsdown": "^0.19.0-beta.4",
+    "typescript": "^5.4.5",
+    "vitest": "^4.0.16",
+    "vafast": "^0.8.1"
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "keywords": [
+    "vafast",
+    "server-timing",
+    "performance"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vafast/vafast-server-timing"
+  },
+  "author": {
+    "name": "saltyAom",
+    "url": "https://github.com/SaltyAom",
+    "email": "saltyaom@gmail.com"
+  },
+  "homepage": "https://github.com/vafast/vafast-server-timing",
+  "bugs": "https://github.com/vafast/vafast-server-timing/issues"
 }
