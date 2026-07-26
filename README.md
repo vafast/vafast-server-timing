@@ -1,65 +1,45 @@
 # @vafast/server-timing
 
-Server-Timing middleware for [Vafast](https://github.com/vafastjs/vafast) framework, used for performance tracking and debugging.
+Vafast Server-Timing 中间件：把 `handle` / `total` 耗时写入响应头，便于 DevTools 观察。
 
 ## Installation
 
 ```bash
 npm install @vafast/server-timing
-# or
-npm install @vafast/server-timing
 ```
 
-## Usage
+## Quick start
 
 ```typescript
-import { Server, createHandler } from 'vafast'
+import { Server, defineRoute, defineRoutes, json, serve } from 'vafast'
 import { serverTiming } from '@vafast/server-timing'
 
-const timing = serverTiming()
-
-const routes = [
-  {
+const routes = defineRoutes([
+  defineRoute({
     method: 'GET',
     path: '/',
-    middleware: [timing],
-    handler: createHandler(() => {
-      return { ok: true }
-    })
-  }
-]
+    handler: () => json({ ok: true }),
+  }),
+])
 
 const server = new Server(routes)
-
-export default {
-  fetch: (req: Request) => server.fetch(req)
-}
+server.use(serverTiming())
+serve({ fetch: server.fetch, port: 3000 })
 ```
 
-## Configuration
+响应示例：`Server-Timing: handle;dur=1.23,total;dur=1.25`
 
-### enabled
+## Options
 
-@default `NODE_ENV !== 'production'`
+| Option | Default | Description |
+|--------|---------|-------------|
+| `enabled` | `NODE_ENV !== 'production'` | 是否启用；生产默认关闭 |
+| `allow` | 允许写入 | `boolean` 或 `({ request }) => boolean \| Promise<boolean>` |
+| `trace.handle` | `true` | 输出 `handle` 段 |
+| `trace.total` | `true` | 输出 `total` 段 |
 
-Whether to enable Server-Timing middleware
+当前仅支持 `handle` / `total` 两段计时。
 
-### allow
+## Docs
 
-@default `true`
-
-Allow/deny writing response headers
-- `boolean` - Whether to allow
-- `function` - Dynamic judgment based on context
-
-### trace
-
-@default `{ handle: true, total: true }`
-
-Tracking options
-- `handle` - Track handler execution time
-- `total` - Track total request time
-
-## License
-
-MIT
+See [Server Timing middleware docs](https://vafast.huyooo.com/middleware/server-timing.html).
